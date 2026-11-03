@@ -177,6 +177,9 @@ func (a *App) translateView(c *ui.Context) {
 		// The primary action sits at the right end of the row: the spacer
 		// takes all free width and pushes the stats and button there.
 		ui.Row(c).Gap(8).AlignItems(ui.Center).Children(func() {
+			if ui.Button(c, "결과 복사").Clicked() {
+				a.CopyTranslation()
+			}
 			ui.Box(c).Grow(1)
 			if stats := a.statsText(); stats != "" {
 				ui.Text(c, stats).FontSize(11)

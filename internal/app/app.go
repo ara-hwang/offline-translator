@@ -22,6 +22,24 @@ import (
 	"offline-translator/internal/winapi"
 )
 
+// CopyTranslation copies the current output without changing its whitespace.
+func (a *App) CopyTranslation() {
+	if strings.TrimSpace(a.OutputText) == "" {
+		a.Mu.Lock()
+		a.Notice = "복사할 번역 결과가 없습니다."
+		a.Mu.Unlock()
+		return
+	}
+	err := winapi.CopyText(a.OutputText)
+	a.Mu.Lock()
+	defer a.Mu.Unlock()
+	if err != nil {
+		a.Notice = fmt.Sprintf("번역 결과를 복사하지 못했습니다: %v", err)
+		return
+	}
+	a.Notice = "번역 결과를 복사했습니다."
+}
+
 // UI tab indexes.
 const (
 	tabTranslate = 0

@@ -181,6 +181,11 @@ func readGlobalString(handle uintptr) string {
 	return string(utf16.Decode(words[:end]))
 }
 
+// CopyText copies text to the system clipboard, leaving it unchanged for empty text.
+func CopyText(text string) error {
+	return writeClipboardText(text)
+}
+
 // writeClipboardText replaces the clipboard text; empty means "leave the
 // clipboard alone", so the text the copy just produced survives when there
 // is nothing to restore.
